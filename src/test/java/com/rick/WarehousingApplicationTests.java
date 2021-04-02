@@ -19,7 +19,7 @@ class WarehousingApplicationTests {
     @Test
     void contextLoads() {
         Map<String, Object> map = new HashMap<>();
-        map.put("address","武汉");
+        map.put("addresss","武汉");
         List<SysUser> sysUsers = this.sysUserMapper.selectByMap(map);
         print(sysUsers);
 
