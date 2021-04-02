@@ -8,6 +8,7 @@ class WarehousingApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("success");
     }
 
 }
