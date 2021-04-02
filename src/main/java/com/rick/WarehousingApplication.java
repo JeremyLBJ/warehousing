@@ -1,4 +1,4 @@
-package com.rick.warehousing;
+package com.rick;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
