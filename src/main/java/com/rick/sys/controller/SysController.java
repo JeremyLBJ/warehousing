@@ -9,10 +9,16 @@ public class SysController {
 
     /**
      * 用户登录页面
-     * @return
+     *
      */
     @RequestMapping("/toLogin")
     public String toLogin () {
         return "system/index/login";
+    }
+
+
+    @RequestMapping("/index")
+    public String index(){
+        return "system/index/index";
     }
 }
