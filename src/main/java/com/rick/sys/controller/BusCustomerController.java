@@ -16,5 +16,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/sys/bus-customer")
 public class BusCustomerController {
-
+    
 }
