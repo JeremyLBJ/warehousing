@@ -32,4 +32,9 @@ class WarehousingApplicationTests {
         }
     }
 
+    @Test
+    void test(){
+        System.out.println("success");
+    }
+
 }
