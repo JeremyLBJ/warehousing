@@ -15,4 +15,10 @@ public class SysController {
     public String toLogin () {
         return "system/index/login";
     }
+
+
+    @RequestMapping("/index")
+    public String index() {
+        return "system/index/index";
+    }
 }
