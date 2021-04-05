@@ -19,6 +19,7 @@ public class SysController {
 
     @RequestMapping("/index")
     public String index(){
+
         return "system/index/index";
     }
 }
