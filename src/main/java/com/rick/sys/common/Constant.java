@@ -12,7 +12,7 @@ public interface Constant {
     /**
      * 是否为超级管理员
      */
-    Integer SUPER_USER = 0;
+    public static final Integer SUPER_USER = 0;
     Integer AVERAGE_USER = 1;
 
 
@@ -26,7 +26,7 @@ public interface Constant {
     /**
      * 是否展开
      */
-    Integer IS_OPEN = 1;
+    public static final Integer IS_OPEN = 1;
     Integer NOT_OPEN = 0;
 
 

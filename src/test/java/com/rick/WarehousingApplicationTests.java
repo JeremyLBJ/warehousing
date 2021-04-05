@@ -54,34 +54,34 @@ class WarehousingApplicationTests {
     // 需要传一个vo
     @Test
     void buildTreeTest () {
-        QueryWrapper<SysPermission> wrapper = new QueryWrapper<SysPermission>();
-        wrapper.eq("type",Constant.MENU);
-        wrapper.eq("available",Constant.AVAILABLE);
-        // 条件拼接  需要判断用户是否为最高管理员
-        SysUser user = (SysUser) WebUntils.getSession().getAttribute("user");
-        List<SysPermission> sysPermissions = null;
-        if (Constant.SUPER_USER == user.getType()) {
-            //超级管理员  拥有所有权限
-            sysPermissions = this.sysPermissionService.list(wrapper);
-        } else {
-            // 普通管理员  通过管理员ID+权限ID+角色ID查询出来
-            sysPermissions = this.sysPermissionService.list(wrapper);
-        }
-        // 循环添加到集合中 此时还没有层级关系
-        List<TreeNode> sysPermissionList = new ArrayList<>();
-        for (SysPermission p: sysPermissions
-             ) {
-            Integer id = p.getId();
-            Integer pid = p.getPid();
-            String title = p.getTitle();
-            String icon = p.getIcon();
-            String href = p.getHref();
-            Boolean spread = p.getOpen()== Constant.IS_OPEN ?true:false;
-            sysPermissionList.add(new TreeNode( id,  pid,  title,  icon,  href,  spread));
-        }
-        //创建一个类 在类中构造层级关系
-        List<TreeNode> treeNode = BuilderTreeNode.builderTree(sysPermissionList,1);
-        System.out.println(treeNode);
+//        QueryWrapper<SysPermission> wrapper = new QueryWrapper<SysPermission>();
+//        wrapper.eq("type",Constant.MENU);
+//        wrapper.eq("available",Constant.AVAILABLE);
+//        // 条件拼接  需要判断用户是否为最高管理员
+//        SysUser user = (SysUser) WebUntils.getSession().getAttribute("user");
+//        List<SysPermission> sysPermissions = null;
+//        if (Constant.SUPER_USER.equals(user.getType())) {
+//            //超级管理员  拥有所有权限
+//            sysPermissions = this.sysPermissionService.list(wrapper);
+//        } else {
+//            // 普通管理员  通过管理员ID+权限ID+角色ID查询出来
+//            sysPermissions = this.sysPermissionService.list(wrapper);
+//        }
+//        // 循环添加到集合中 此时还没有层级关系
+//        List<TreeNode> sysPermissionList = new ArrayList<>();
+//        for (SysPermission p: sysPermissions
+//             ) {
+//            Integer id = p.getId();
+//            Integer pid = p.getPid();
+//            String title = p.getTitle();
+//            String icon = p.getIcon();
+//            String href = p.getHref();
+//            Boolean spread = p.getOpen().equals(Constant.IS_OPEN) ?true:false;
+//            sysPermissionList.add(new TreeNode( id,  pid,  title,  icon,  href,  spread));
+//        }
+//        //创建一个类 在类中构造层级关系
+//        List<TreeNode> treeNode = BuilderTreeNode.builderTree(sysPermissionList,1);
+//        System.out.println(treeNode);
     }
 
 }
