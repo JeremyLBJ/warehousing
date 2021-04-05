@@ -111,7 +111,7 @@ public class ShiroAutoConfiguration {
     /**
      * 注册shiro的委托过滤器，相当于之前在web.xml里面配置的
      *
-     * @return
+     *
      */
     @Bean
     public FilterRegistrationBean<DelegatingFilterProxy> delegatingFilterProxy() {
@@ -127,7 +127,7 @@ public class ShiroAutoConfiguration {
     /**
      *
      * @param securityManager
-     * @return
+     *
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {

@@ -1,6 +1,9 @@
 package com.rick.sys.controller;
 
+import com.rick.sys.common.ActiveUser;
 import com.rick.sys.common.ResultObject;
+import com.rick.sys.entity.SysUser;
+import com.rick.sys.untils.WebUntils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -24,6 +27,9 @@ public class SysLoginController {
         AuthenticationToken token = new UsernamePasswordToken(loginname,pwd);
         try {
             subject.login(token);
+            ActiveUser user = (ActiveUser) subject.getPrincipal();
+            System.out.println(user);
+            WebUntils.getSession().setAttribute("user",user.getSysUser());
             return ResultObject.LOGIN_SUCCESS;
         }catch (AuthenticationException e) {
             e.printStackTrace();

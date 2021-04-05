@@ -9,7 +9,7 @@ public class SysController {
 
     /**
      * 用户登录页面
-     * @return
+     *
      */
     @RequestMapping("/toLogin")
     public String toLogin () {
@@ -18,7 +18,7 @@ public class SysController {
 
 
     @RequestMapping("/index")
-    public String index () {
+    public String index(){
         return "system/index/index";
     }
 }
