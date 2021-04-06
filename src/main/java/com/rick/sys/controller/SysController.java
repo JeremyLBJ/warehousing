@@ -27,4 +27,9 @@ public class SysController {
     public String toMainPage () {
         return "system/index/main";
     }
+
+    @RequestMapping("/toLogLoginManager")
+    public String toLogLoginManager () {
+        return "";
+    }
 }
