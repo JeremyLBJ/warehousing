@@ -22,4 +22,9 @@ public class SysController {
 
         return "system/index/index";
     }
+
+    @RequestMapping(value = "toMainPage")
+    public String toMainPage () {
+        return "system/index/main";
+    }
 }
