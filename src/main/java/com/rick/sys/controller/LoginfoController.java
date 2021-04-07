@@ -57,7 +57,7 @@ public class LoginfoController {
      * @param vo
      * @return
      */
-    @RequestMapping(value = "/deleteLogInfoById",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteLogInfoById",method = RequestMethod.POST)
     @ResponseBody
     public ResultObject deleteLogInfoById (LogInfoVO vo) {
         try {
@@ -72,16 +72,18 @@ public class LoginfoController {
 
     /**
      * 批量删除
-     * @param ids
+     * @param vo
      * @return
      */
-    @RequestMapping(value = "/deleteLogInfoByIds",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteLogInfoByIds",method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject deleteLogInfoByIds (Integer [] ids){
+    public ResultObject deleteLogInfoByIds (LogInfoVO vo){
         try {
-            List<Integer> resultList = new ArrayList<>(ids.length);
-            Collections.addAll(resultList,ids);
-            this.iSysLogLoginService.removeByIds(resultList);
+            List<Integer> idList = new ArrayList<>();
+            for (Integer id: vo.getIds()) {
+                idList.add(id);
+            }
+            this.iSysLogLoginService.removeByIds(idList);
             return ResultObject.DELETE_SUCCESS;
         }catch (Exception e){
             e.printStackTrace();

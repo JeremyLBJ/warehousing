@@ -15,10 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.security.Permission;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @SpringBootTest
 class WarehousingApplicationTests {
@@ -82,6 +81,16 @@ class WarehousingApplicationTests {
 //        //创建一个类 在类中构造层级关系
 //        List<TreeNode> treeNode = BuilderTreeNode.builderTree(sysPermissionList,1);
 //        System.out.println(treeNode);
+    }
+
+    @Test
+    void locaTimeTest () {
+        String format = "YYYY-MM-dd hh:mm:ss";
+        // DateTimeFormatter.ofPattern方法根据指定的格式输出时间
+        String formatDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
+        System.out.println(LocalDateTime.now());
+        System.out.println(new Date());
+        System.out.println(formatDateTime);
     }
 
 }

@@ -118,7 +118,80 @@
                 }
             });
             return false;
-        })
+        });
+
+        //监听工具条时间
+        table.on('toolbar(loginfoTable)', function(obj) {
+            switch (obj.event) {
+                case 'batchDelete':
+                    batchDelete();
+                    break;
+            }
+        });
+
+        //监听行工具条事件
+        table.on('tool(loginfoTable)', function(obj) {
+            let data = obj.data;
+            switch (obj.event) {
+                case 'delete':
+                    deleteById(data);
+                    break;
+            }
+        });
+
+        // 根据ID删除
+        function deleteById(data) {
+                layer.confirm('是否要删除这行数据?', {icon: 3, title:'提示'}, function(index){
+                    //do something
+                    //发送请求
+                    $.post("/logInfo/deleteLogInfoById",{id:data.id},function (res) {
+                        if (200===res.code){
+                            tableIns.reload();
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                        layer.msg(res.msg);
+                    })
+                    layer.close(index);
+                });
+        }
+
+        // 批量删除
+        function batchDelete() {
+            let checkStatus = table.checkStatus('loginfoTable');
+            // 选中行的长度
+            let checkStatusLength = checkStatus.data.length;
+            if (checkStatusLength>0){
+                layer.confirm('是否要删除这些数据?', {icon: 3, title:'提示'}, function(index){
+                    //do something
+                    let data = checkStatus.data;
+                    let ids = "";
+                    $.each(data,function (index,item) {
+                        if (0===index){
+                            ids +="ids="+item.id;
+                        } else{
+                            ids +="&ids="+item.id;
+                        }
+                    })
+                    //发送请求
+                    $.post("/logInfo/deleteLogInfoByIds",ids,function (res) {
+                        if (200===res.code){
+                            tableIns.reload();
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                        layer.msg(res.msg);
+                    })
+                    layer.close(index);
+                });
+
+            }else{
+                layer.msg("请选择操作行")
+            }
+        }
+
+
+
 
     });
 </script>

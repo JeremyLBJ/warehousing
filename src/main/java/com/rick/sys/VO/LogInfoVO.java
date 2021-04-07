@@ -16,6 +16,8 @@ public class LogInfoVO extends SysLogLogin {
 
     private Integer limit = 10;
 
+    private Integer[] ids;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
