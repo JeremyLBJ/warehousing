@@ -41,6 +41,7 @@ public class LoginfoController {
         queryWapper.like(StringUtils.isNotBlank(vo.getLoginip()),"loginip",vo.getLoginip());
         queryWapper.ge(vo.getStartTime()!=null,"logintime",vo.getStartTime());
         queryWapper.le(vo.getEndTime()!=null,"logintime",vo.getEndTime());
+        queryWapper.orderByDesc("logintime");
         this.iSysLogLoginService.page(page,queryWapper);
         return  new DataGridView(page.getTotal(),page.getRecords());
     }
