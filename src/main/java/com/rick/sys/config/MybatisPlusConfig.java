@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @Ahthro Rick
+ * MybatisPlus 分页插件配置类
+ */
 @Configurable
 @ConditionalOnClass(value = PaginationInterceptor.class)
 public class MybatisPlusConfig {
