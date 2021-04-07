@@ -30,6 +30,6 @@ public class SysController {
 
     @RequestMapping("/toLogLoginManager")
     public String toLogLoginManager () {
-        return "";
+        return "system/loginfo/loginfoManager";
     }
 }
