@@ -89,7 +89,7 @@
             type:'datetime'
         });
 
-        //第一个实例
+        //数据表格渲染
         let tableIns = table.render({
             elem: '#loginfoTable'
             ,toolbar: '#loginfoToolBar' //开启头部工具栏，并为其绑定左侧模板
@@ -97,15 +97,14 @@
             ,height:'full-220'
             ,url: '/logInfo/loadAllLogInfo' //数据接口
             ,page: true //开启分页
-            ,limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致
             ,cols: [
                 [ //表头
-                    {field: 'checkbox', fixed: 'left'}
-                   ,{field: 'id', title: 'ID',  fixed: 'left'}
+                    {type: 'checkbox', fixed: 'left'}
+                   ,{field: 'id', title: 'ID',align:'center'}
                    ,{field: 'loginname', title: '登陆名称',align:'center'}
                    ,{field: 'loginip', title: '登录IP',align:'center'}
                    ,{field: 'logintime', title: '登录时间',align:'center'}
-                    ,{fixed: 'right', title: '操作',toolbar:'loginfoRowBar'}
+                    ,{fixed: 'right', title: '操作',toolbar:'#loginfoRowBar',align:'center'}
                 ]
             ]
         });
