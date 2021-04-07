@@ -28,6 +28,8 @@ public class SysController {
         return "system/index/main";
     }
 
+
+
     @RequestMapping("/toLogLoginManager")
     public String toLogLoginManager () {
         return "system/loginfo/loginfoManager";
