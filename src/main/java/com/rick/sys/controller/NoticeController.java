@@ -36,7 +36,7 @@ public class NoticeController {
      * @param vo  接收前端数据
      * @return  返回对应数据
      */
-    @RequestMapping(value = "/queryAllNotice",method = RequestMethod.GET)
+    @RequestMapping(value = "/loadAllNotice",method = RequestMethod.GET)
     @ResponseBody
     public DataGridView queryAllNotice (NoticeVO vo) {
         QueryWrapper<SysNotice> wrapper = new QueryWrapper<>();
@@ -45,8 +45,18 @@ public class NoticeController {
         wrapper.like(StringUtils.isNotBlank(vo.getOpername()),"opername",vo.getOpername());
         wrapper.ge(vo.getStartTime()!=null,"createtime",vo.getStartTime());
         wrapper.le(vo.getEndTime()!=null,"createtime",vo.getEndTime());
-        this.sysNoticeService.list(wrapper);
+        wrapper.orderByDesc("createtime");
+        this.sysNoticeService.page(page,wrapper);
         return new DataGridView(page.getTotal(),page.getRecords());
+    }
+
+
+
+    @RequestMapping(value = "/queryNoticeById",method = RequestMethod.GET)
+    @ResponseBody
+    public DataGridView queryNoticeById (NoticeVO vo) {
+        SysNotice byId = this.sysNoticeService.getById(vo.getId());
+        return new DataGridView(byId);
     }
 
 

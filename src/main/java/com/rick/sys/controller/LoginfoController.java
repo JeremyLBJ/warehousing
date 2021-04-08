@@ -38,7 +38,7 @@ public class LoginfoController {
      * @param vo
      * @return
      */
-    @RequestMapping(value = "loadAllLogInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/loadAllLogInfo",method = RequestMethod.GET)
     @ResponseBody
     public DataGridView loadAllLogInfo (LogInfoVO vo) {
         IPage<SysLogLogin> page = new Page(vo.getPage(),vo.getLimit());
