@@ -34,4 +34,10 @@ public class SysController {
     public String toLogLoginManager () {
         return "system/loginfo/loginfoManager";
     }
+
+
+    @RequestMapping(value = "/toNoticeManager")
+    public String toNoticeManager () {
+        return "system/notice/noticeManager";
+    }
 }
