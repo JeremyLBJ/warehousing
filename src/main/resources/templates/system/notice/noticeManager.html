@@ -12,7 +12,6 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
-    <link rel="stylesheet" href="/resources/css/index.css" media="all" />
     <link rel="stylesheet" href="/resources/css/public.css" media="all" />
 </head>
 <body class="childrenBody">
@@ -72,16 +71,45 @@
         <button type="button" lay-event="find" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-tips"></span>查看</button>
     </div>
 </div>
+
+<!-- 添加和修改的弹出层开始 -->
+<div style="display: none;padding: 5px" id="addOrUpdateDiv">
+    <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">公告标题</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="id">
+                <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公告内容</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="content" id="content"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center;">
+                <button type="button" class="layui-btn" lay-submit="" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
+                <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh-1"></span>重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 添加和修改的弹出层结束 -->
+
+
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 
 <script type="text/javascript">
 
-    layui.use(['jquery','form','table','layer','laydate'],function(){
+    layui.use(['jquery','form','table','layer','laydate','layedit'],function(){
         var $=layui.jquery;
         var form=layui.form;
         var table=layui.table;
         var layer=layui.layer;
         var laydate=layui.laydate;
+        var layedit=layui.layedit;
         //初始化时间选择器
         laydate.render({
             elem:'#startTime',
@@ -91,6 +119,9 @@
             elem:'#endTime',
             type:'datetime'
         });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('content');
 
         //数据表格渲染
         let tableIns = table.render({
@@ -131,7 +162,7 @@
                     batchDelete();
                     break;
                 case 'add':
-                    add();
+                    openAddLayer();
                     break;
                 case 'find':
                     find();
@@ -158,8 +189,17 @@
         }
 
 
-        function add () {
+        var mainIndex;
+        function openAddLayer () {
+            mainIndex=layer.open({
+                type:1,
+                content:$("#addOrUpdateDiv"),
+                area:['800px','600px'],
+                title:'发布公告',
+                success:function(){
 
+                }
+            });
         }
 
         function find () {
