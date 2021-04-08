@@ -69,6 +69,7 @@
     <div id="noticeRowBar" style="display: none;">
         <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
         <button type="button" lay-event="update" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-edit"></span>更新</button>
+        <button type="button" lay-event="find" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-tips"></span>查看</button>
     </div>
 </div>
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
@@ -132,6 +133,9 @@
                 case 'add':
                     add();
                     break;
+                case 'find':
+                    find();
+                    break;
             }
         });
 
@@ -155,6 +159,10 @@
 
 
         function add () {
+
+        }
+
+        function find () {
 
         }
 
