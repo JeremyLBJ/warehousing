@@ -90,7 +90,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block" style="text-align: center;">
-                <button type="button" class="layui-btn" lay-submit="" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
                 <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh-1"></span>重置</button>
             </div>
         </div>
@@ -134,12 +134,12 @@
             ,cols: [
                 [ //表头
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field: 'id', title: 'ID',align:'center'}
-                    ,{field: 'title', title: '公告标题',align:'center'}
-                    ,{field: 'content', title: '公告内容',align:'center'}
-                    ,{field: 'opername', title: '发布人',align:'center'}
-                    ,{field: 'createtime', title: '发布时间',align:'center'}
-                    ,{fixed: 'right', title: '操作',toolbar:'#noticeRowBar',align:'center'}
+                    ,{field: 'id', title: 'ID',align:'center',width:'60'}
+                    ,{field: 'title', title: '公告标题',align:'center',width:'200'}
+                    ,{field: 'content', title: '公告内容',align:'center',width:'200'}
+                    ,{field: 'opername', title: '发布人',align:'center',width:'128'}
+                    ,{field: 'createtime', title: '发布时间',align:'center',width:'200'}
+                    ,{fixed: 'right', title: '操作',toolbar:'#noticeRowBar',align:'center',width:'280'}
                 ]
             ]
         });
@@ -164,9 +164,6 @@
                 case 'add':
                     openAddLayer();
                     break;
-                case 'find':
-                    find();
-                    break;
             }
         });
 
@@ -180,6 +177,9 @@
                 case 'update':
                     update();
                     break;
+                case 'find':
+                    find();
+                    break;
             }
         });
 
@@ -190,6 +190,7 @@
 
 
         var mainIndex;
+        let url;
         function openAddLayer () {
             mainIndex=layer.open({
                 type:1,
@@ -197,10 +198,24 @@
                 area:['800px','600px'],
                 title:'发布公告',
                 success:function(){
-
+                    url = "/notice/saveNotice"
                 }
             });
         }
+
+
+        form.on("submit(doSubmit)",function (data){
+            layedit.sync(editIndex);
+           $.post(url,{title:data.field.title,content: layedit.getContent(editIndex)},function (res){
+               if (200===res.code){
+                   tableIns.reload();
+               }
+               layer.msg(res.msg);
+               layer.close(mainIndex);
+           })
+            return false;
+        });
+
 
         function find () {
 
@@ -211,7 +226,7 @@
             layer.confirm('是否要删除这行数据?', {icon: 3, title:'提示'}, function(index){
                 //do something
                 //发送请求
-                $.post("/logInfo/deleteNoticeById",{id:data.id},function (res) {
+                $.post("/notice/removeById",{id:data.id},function (res) {
                     if (200===res.code){
                         tableIns.reload();
                     }else{
@@ -241,7 +256,7 @@
                         }
                     })
                     //发送请求
-                    $.post("/logInfo/deleteNoticeByIds",ids,function (res) {
+                    $.post("/notice/batchRemoveByIds",ids,function (res) {
                         if (200===res.code){
                             tableIns.reload();
                         }else{

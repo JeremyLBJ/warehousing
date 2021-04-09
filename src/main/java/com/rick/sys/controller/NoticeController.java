@@ -8,7 +8,9 @@ import com.rick.sys.VO.NoticeVO;
 import com.rick.sys.common.DataGridView;
 import com.rick.sys.common.ResultObject;
 import com.rick.sys.entity.SysNotice;
+import com.rick.sys.entity.SysUser;
 import com.rick.sys.service.ISysNoticeService;
+import com.rick.sys.untils.WebUntils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,5 +100,27 @@ public class NoticeController {
             e.printStackTrace();
             return ResultObject.DELETE_ERROR;
         }
+    }
+
+
+    /**
+     * 保存系统公告
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value = "/saveNotice",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject saveNotice (NoticeVO vo) {
+        try {
+            vo.setCreatetime(LocalDateTime.now());
+            SysUser u = (SysUser) WebUntils.getSession().getAttribute("user");
+            vo.setOpername(u.getName());
+            this.sysNoticeService.save(vo);
+            return ResultObject.SAVE_SUCCESS;
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResultObject.SAVE_ERROR;
+        }
+
     }
 }
