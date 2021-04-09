@@ -175,7 +175,7 @@
                     deleteById(data);
                     break;
                 case 'update':
-                    update();
+                    update(data);
                     break;
                 case 'find':
                     find();
@@ -184,7 +184,7 @@
         });
 
 
-        function update () {
+        function update (data) {
 
         }
 
@@ -198,6 +198,8 @@
                 area:['800px','600px'],
                 title:'发布公告',
                 success:function(){
+                    $("#dataFrm")[0].reset();
+                    layedit.setContent(editIndex,"");
                     url = "/notice/saveNotice"
                 }
             });
@@ -206,6 +208,7 @@
 
         form.on("submit(doSubmit)",function (data){
             layedit.sync(editIndex);
+            // {title:data.field.title,content: layedit.getContent(editIndex)}
            $.post(url,{title:data.field.title,content: layedit.getContent(editIndex)},function (res){
                if (200===res.code){
                    tableIns.reload();
