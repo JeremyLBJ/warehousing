@@ -121,6 +121,19 @@ public class NoticeController {
             e.printStackTrace();
             return ResultObject.SAVE_ERROR;
         }
+    }
 
+
+    @RequestMapping(value = "/updateNotice",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject updateNotice (NoticeVO vo) {
+        try {
+            System.out.println(vo);
+            this.sysNoticeService.updateById(vo);
+            return ResultObject.UPDATE_SUCCESS;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResultObject.DELETE_ERROR;
+        }
     }
 }
