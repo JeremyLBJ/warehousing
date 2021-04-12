@@ -40,4 +40,21 @@ public class SysController {
     public String toNoticeManager () {
         return "system/notice/noticeManager";
     }
+
+
+    @RequestMapping(value = "/toDeptManager")
+    public String toDeptManager () {
+        return "system/dept/deptManager";
+    }
+
+
+    @RequestMapping(value = "/toLeftTree")
+    public String toLeftTree () {
+        return "system/dept/leftTree";
+    }
+
+    @RequestMapping(value = "rightData")
+    public String rightData () {
+        return "system/dept/rightData";
+    }
 }

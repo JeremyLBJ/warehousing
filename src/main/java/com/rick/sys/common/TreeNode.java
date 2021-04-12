@@ -1,5 +1,6 @@
 package com.rick.sys.common;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rick.sys.entity.SysPermission;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.util.List;
 public class TreeNode {
 
     private Integer id;
+    @JsonProperty("parentId")
     private Integer pid;
     private String title;
     private String icon;
@@ -35,6 +37,18 @@ public class TreeNode {
         this.title = title;
         this.icon = icon;
         this.href = href;
+        this.spread = spread;
+    }
+
+
+    /**
+     *首页左边部门树的构造器
+     */
+    public TreeNode(Integer id, Integer pid, String title, Boolean spread) {
+        super();
+        this.id = id;
+        this.pid = pid;
+        this.title = title;
         this.spread = spread;
     }
 }
