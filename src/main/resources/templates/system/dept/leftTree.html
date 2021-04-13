@@ -40,8 +40,7 @@
 
         // 绑定节点点击
         dtree.on("node(dataTree)" ,function(obj){
-            layer.msg(JSON.stringify(obj.param));
-            // window.parent.righ.reloadTable(obj.param.nodeId);
+            window.parent.right.reloadTable(obj.param.nodeId);
         });
     });
 
