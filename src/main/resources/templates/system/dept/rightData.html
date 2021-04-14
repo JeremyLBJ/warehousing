@@ -13,6 +13,8 @@
     <link rel="icon" href="/favicon.ico">
     <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
     <link rel="stylesheet" href="/resources/css/public.css" media="all" />
+    <link rel="stylesheet" href="/resources/layui_ext/dtree/dtree.css" media="all" />
+    <link rel="stylesheet" href="/resources/layui_ext/dtree/font/dtreefont.css" media="all" />
 </head>
 <body class="childrenBody">
 <!-- 查询条件开始 -->
@@ -130,11 +132,14 @@
 
 <script type="text/javascript">
     let tableIns;
-    layui.use(['jquery','form','table','layer'],function(){
+    layui.extend({
+        dtree: '/resources/layui_ext/dtree/dtree'   // {/}的意思即代表采用自有路径，即不跟随 base 路径
+    }).use(['jquery','form','table','layer','dtree'],function(){
         let $=layui.jquery;
         let form=layui.form;
         let table=layui.table;
         let layer=layui.layer;
+        let dtree=layui.dtree;
 
         //数据表格渲染
          tableIns = table.render({
@@ -200,6 +205,10 @@
 
         let mainIndex;
         let url;
+
+        /**
+         * 添加
+         */
         function openAddLayer () {
             mainIndex=layer.open({
                 type:1,
@@ -208,7 +217,11 @@
                 title:'添加部门信息',
                 success:function(){
                     $("#dataFrm")[0].reset();
-                    url = "/dept/saveDept"
+                    url = "/dept/saveDept";
+                    //初始化排序码
+                    $.get("/dept/loadDeptMaxOrderNum",function(res){
+                        $("#ordernum").val(res.value);
+                    })
                 }
             });
         }
@@ -219,6 +232,10 @@
             $.post(url,data,function (res){
                 if (200===res.code){
                     tableIns.reload();
+                    //刷新下拉树
+                    selectTree.reload();
+                    //刷新左边的部门树
+                    // window.parent.left.deptTree.reload();
                 }
                 layer.msg(res.msg);
                 layer.close(mainIndex);
@@ -260,7 +277,23 @@
                 layer.close(index);
             });
         }
+        // 初始化树
+        let selectTree= dtree.render({
+            elem: "#deptTree",
+            width: "100%", // 可以在这里指定树的宽度来填满div
+            dataStyle: "layuiStyle",  //使用layui风格的数据格式
+            dataFormat: "list",  //配置data的风格为list
+            response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+            url: "/dept/loadDeptManagerLeftTreeJson" // 使用url加载（可与data加载同时存在）
+        });
+
+        // 绑定节点点击
+        dtree.on("node(deptTree)" ,function(obj){
+            // alert(obj.param.nodeId);
+            $("#pid").val(obj.param.nodeId);
+        });
     });
+
 
     function reloadTable(id) {
         tableIns.reload({

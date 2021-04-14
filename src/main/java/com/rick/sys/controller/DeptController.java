@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author Rick
@@ -124,5 +126,27 @@ public class DeptController {
             e.printStackTrace();
             return ResultObject.UPDATE_ERROR;
         }
+    }
+
+
+    /**
+     * 加载最大的排序码
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/loadDeptMaxOrderNum",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> loadDeptMaxOrderNum(){
+        Map<String, Object> map=new HashMap<String, Object>();
+
+        QueryWrapper<SysDept> queryWrapper=new QueryWrapper<>();
+        queryWrapper.orderByDesc("ordernum");
+        List<SysDept> list = this.iSysDeptService.list(queryWrapper);
+        if(list.size()>0) {
+            map.put("value", list.get(0).getOrdernum()+1);
+        }else {
+            map.put("value", 1);
+        }
+        return map;
     }
 }
