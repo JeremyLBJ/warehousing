@@ -124,11 +124,16 @@ public class NoticeController {
     }
 
 
+    /**
+     * 修改公告
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/updateNotice",method = RequestMethod.POST)
     @ResponseBody
     public ResultObject updateNotice (NoticeVO vo) {
         try {
-            System.out.println(vo);
+            vo.setCreatetime(LocalDateTime.now());
             this.sysNoticeService.updateById(vo);
             return ResultObject.UPDATE_SUCCESS;
         }catch (Exception e) {

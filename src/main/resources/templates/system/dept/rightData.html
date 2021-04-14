@@ -69,28 +69,62 @@
 <div style="display: none;padding: 5px" id="addOrUpdateDiv">
     <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
         <div class="layui-form-item">
-            <label class="layui-form-label">公告标题</label>
+            <label class="layui-form-label">父级部门</label>
             <div class="layui-input-block">
-                <input type="hidden" name="id">
-                <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input type="hidden" name="pid" id="pid">
+                <ul id="deptTree" class="dtree" data-id="0"></ul>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">公告内容</label>
+            <label class="layui-form-label">部门名称</label>
             <div class="layui-input-block">
-                <textarea class="layui-textarea" name="content" id="content"></textarea>
+                <input type="hidden" name="id">
+                <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入部门名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="address" lay-verify="required" autocomplete="off" placeholder="请输入部门地址" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门备注</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea" name="remark" id="content"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否展开</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="open" value="1" title="展开" checked="">
+                    <input type="radio" name="open" value="0" title="不展开" >
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">是否可用</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="available" value="1" title="可用" checked="">
+                    <input type="radio" name="available" value="0" title="不可用" >
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ordernum" id="ordernum" lay-verify="required|number"  autocomplete="off" placeholder="请输入排序码[>0]" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block" style="text-align: center;">
-                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
+                <button type="button" class="layui-btn" lay-submit="" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
                 <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh-1"></span>重置</button>
             </div>
         </div>
     </form>
 </div>
 <!-- 添加和修改的弹出层结束 -->
-
 
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 
@@ -171,10 +205,10 @@
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px','600px'],
-                title:'发布公告',
+                title:'添加部门信息',
                 success:function(){
                     $("#dataFrm")[0].reset();
-                    url = "/notice/saveNotice"
+                    url = "/dept/saveDept"
                 }
             });
         }
@@ -199,12 +233,12 @@
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px','600px'],
-                title:'修改公告',
+                title:'修改部门信息',
                 success:function(){
                     $("#dataFrm")[0].reset();
                     // 装载新数据
                     form.val("dataFrm",data);
-                    url = "/notice/updateNotice"
+                    url = "/dept/updateDeptById"
                 }
             });
 
@@ -215,7 +249,7 @@
             layer.confirm('是否要删除这行数据?', {icon: 3, title:'提示'}, function(index){
                 //do something
                 //发送请求
-                $.post("/notice/removeById",{id:data.id},function (res) {
+                $.post("/dept/removeById",{id:data.id},function (res) {
                     if (200===res.code){
                         tableIns.reload();
                     }else{

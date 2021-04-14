@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rick.sys.VO.DeptVO;
 import com.rick.sys.common.Constant;
 import com.rick.sys.common.DataGridView;
+import com.rick.sys.common.ResultObject;
 import com.rick.sys.common.TreeNode;
 import com.rick.sys.entity.SysDept;
 import com.rick.sys.service.ISysDeptService;
@@ -17,9 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author Rick
+ * 部门前端控制器
+ */
 @Controller
 @RequestMapping("/dept")
 public class DeptController {
@@ -28,6 +34,11 @@ public class DeptController {
     private ISysDeptService iSysDeptService;
 
 
+    /**
+     * 加载部门左侧树型结构
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/loadDeptManagerLeftTreeJson",method = RequestMethod.POST)
     @ResponseBody
     public DataGridView loadDeptManagerLeftTreeJson (DeptVO vo) {
@@ -41,6 +52,11 @@ public class DeptController {
     }
 
 
+    /**
+     * 全查询数据
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/loadAllDept",method = RequestMethod.GET)
     @ResponseBody
     public DataGridView loadAllDept (DeptVO vo) {
@@ -53,5 +69,60 @@ public class DeptController {
         queryWrapper.orderByAsc("ordernum");
         this.iSysDeptService.page(page,queryWrapper);
         return new DataGridView(page.getTotal(),page.getRecords());
+    }
+
+    /**
+     * 根据id移除
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value = "/removeById",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject removeById (DeptVO vo) {
+        try{
+            this.iSysDeptService.removeById(vo.getId());
+            return ResultObject.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultObject.DELETE_ERROR;
+        }
+    }
+
+
+    /**
+     * 添加部门
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value = "/saveDept",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject save (DeptVO vo) {
+        try{
+            vo.setCreatetime(LocalDateTime.now());
+            this.iSysDeptService.save(vo);
+            return ResultObject.SAVE_SUCCESS;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResultObject.SAVE_SUCCESS;
+        }
+    }
+
+
+    /**
+     * 根据id修改部门信息
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value = "/updateDeptById",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject updateById (DeptVO vo) {
+        try {
+            vo.setCreatetime(LocalDateTime.now());
+            this.iSysDeptService.updateById(vo);
+            return ResultObject.UPDATE_SUCCESS;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResultObject.UPDATE_ERROR;
+        }
     }
 }
