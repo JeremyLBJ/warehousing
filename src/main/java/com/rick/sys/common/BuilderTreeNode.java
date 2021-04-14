@@ -1,5 +1,6 @@
 package com.rick.sys.common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,19 @@ public class BuilderTreeNode {
      * @return
      */
     public static List<TreeNode> builderTree (List<TreeNode> treeNodes , Integer topPid) {
-        return null;
+        List<TreeNode> nodes = new ArrayList<>();
+        // 找出pid为topPid的所有数据
+        for (TreeNode t1: treeNodes) {
+            if (topPid.equals(t1.getPid())) {
+                nodes.add(t1);
+            }
+            //找出pid 为t1 ID的所有数据
+            for (TreeNode t2: treeNodes) {
+                if (t1.getId().equals(t2.getPid())) {
+                    t1.getChildren().add(t2);
+                }
+            }
+        }
+        return nodes;
     }
 }

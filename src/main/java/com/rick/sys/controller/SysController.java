@@ -19,6 +19,42 @@ public class SysController {
 
     @RequestMapping("/index")
     public String index(){
+
         return "system/index/index";
+    }
+
+    @RequestMapping(value = "toMainPage")
+    public String toMainPage () {
+        return "system/index/main";
+    }
+
+
+
+    @RequestMapping("/toLogLoginManager")
+    public String toLogLoginManager () {
+        return "system/loginfo/loginfoManager";
+    }
+
+
+    @RequestMapping(value = "/toNoticeManager")
+    public String toNoticeManager () {
+        return "system/notice/noticeManager";
+    }
+
+
+    @RequestMapping(value = "/toDeptManager")
+    public String toDeptManager () {
+        return "system/dept/deptManager";
+    }
+
+
+    @RequestMapping(value = "/toLeftTree")
+    public String toLeftTree () {
+        return "system/dept/leftTree";
+    }
+
+    @RequestMapping(value = "rightData")
+    public String rightData () {
+        return "system/dept/rightData";
     }
 }
