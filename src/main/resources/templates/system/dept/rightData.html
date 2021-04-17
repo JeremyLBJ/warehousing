@@ -234,6 +234,7 @@
                     tableIns.reload();
                     //刷新下拉树
                     selectTree.reload();
+                    $("#pid").val('');
                     //刷新左边的部门树
                     // window.parent.left.deptTree.reload();
                 }
@@ -255,6 +256,9 @@
                     $("#dataFrm")[0].reset();
                     // 装载新数据
                     form.val("dataFrm",data);
+                    //选中之前父级的部门  nodeId=data.pid;
+                    dtree.dataInit("deptTree", data.pid);
+                    dtree.setSelectValue("deptTree");
                     url = "/dept/updateDeptById"
                 }
             });

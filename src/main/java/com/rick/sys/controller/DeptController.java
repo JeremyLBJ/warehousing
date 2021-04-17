@@ -65,8 +65,8 @@ public class DeptController {
         IPage<SysDept> page = new Page<>(vo.getPage(),vo.getLimit());
         QueryWrapper<SysDept> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StringUtils.isNoneBlank(vo.getTitle()),"title",vo.getTitle());
-        queryWrapper.like(StringUtils.isNoneBlank(vo.getRemark()),"remark",vo.getTitle());
-        queryWrapper.like(StringUtils.isNoneBlank(vo.getAddress()),"address",vo.getTitle());
+        queryWrapper.like(StringUtils.isNoneBlank(vo.getRemark()),"remark",vo.getRemark());
+        queryWrapper.like(StringUtils.isNoneBlank(vo.getAddress()),"address",vo.getAddress());
         queryWrapper.eq(vo.getId()!=null,"id",vo.getId()).or().eq(vo.getId()!=null,"pid",vo.getId());
         queryWrapper.orderByAsc("ordernum");
         this.iSysDeptService.page(page,queryWrapper);
