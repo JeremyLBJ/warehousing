@@ -3,9 +3,9 @@ package com.rick.sys.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.rick.sys.VO.MenuVO;
 import com.rick.sys.VO.PermissionVO;
 import com.rick.sys.common.*;
-import com.rick.sys.entity.SysDept;
 import com.rick.sys.entity.SysPermission;
 import com.rick.sys.entity.SysUser;
 import com.rick.sys.service.ISysPermissionService;
@@ -88,7 +88,7 @@ public class MenuController {
         QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", Constant.MENU);
         queryWrapper.like(StringUtils.isNoneBlank(vo.getTitle()),"title",vo.getTitle());
-        queryWrapper.eq(vo.getId().equals(""),"id",vo.getId()).or().eq(vo.getId().equals(""),"pid",vo.getId());
+        queryWrapper.eq(vo.getId() != null,"id",vo.getId()).or().eq(vo.getId()!= null,"pid",vo.getId());
         queryWrapper.orderByAsc("ordernum");
         this.sysPermissionService.page(page,queryWrapper);
         return new DataGridView(page.getTotal(),page.getRecords());
@@ -101,9 +101,9 @@ public class MenuController {
      * @param
      * @return
      */
-    @RequestMapping(value = "/loadDeptMaxOrderNum",method = RequestMethod.GET)
+    @RequestMapping(value = "/loadMenuMaxOrderNum",method = RequestMethod.GET)
     @ResponseBody
-    public Map<String,Object> loadDeptMaxOrderNum(){
+    public Map<String,Object> loadMenuMaxOrderNum(){
         Map<String, Object> map=new HashMap<String, Object>();
 
         QueryWrapper<SysPermission> queryWrapper=new QueryWrapper<>();
@@ -167,5 +167,45 @@ public class MenuController {
             e.printStackTrace();
             return ResultObject.UPDATE_ERROR;
         }
+    }
+
+
+    /**
+     * 查询当前节点是否有子节点
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value = "/checkMenuChildren",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> checkMenuChildren (MenuVO vo) {
+        Map<String,Object> map = new HashMap<>();
+        QueryWrapper<SysPermission> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("pid",vo.getId());
+        List<SysPermission> list = this.sysPermissionService.list(queryWrapper);
+        if (list.size()>0) {
+            map.put("Value",true);
+        }else {
+            map.put("value",false);
+        }
+        return map;
+    }
+    
+    
+    @RequestMapping(value = "/loadManagerLeftTreeJson",method = RequestMethod.POST)
+    @ResponseBody
+    public DataGridView loadManagerLeftTreeJson () {
+        QueryWrapper<SysPermission> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("type", Constant.MENU);
+        queryWrapper.eq("available",Constant.AVAILABLE);
+        List<SysPermission> list = this.sysPermissionService.list(queryWrapper);
+        List<TreeNode> treeNodeList = new ArrayList<>();
+        for (SysPermission p : list) {
+            Integer id = p.getId();
+            Integer pid = p.getPid();
+            String title = p.getTitle();
+            Boolean spread = p.getOpen()==1?true:false;
+            treeNodeList.add(new TreeNode( id,  pid,  title,  spread));
+        }
+        return new DataGridView(treeNodeList);
     }
 }

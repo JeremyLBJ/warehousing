@@ -53,8 +53,14 @@ public class SysController {
         return "system/dept/leftTree";
     }
 
-    @RequestMapping(value = "rightData")
+    @RequestMapping(value = "/rightData")
     public String rightData () {
         return "system/dept/rightData";
+    }
+
+
+    @RequestMapping(value = "/toMenuManager")
+    public String toMenuManager () {
+        return "system/menu/menuManager";
     }
 }
