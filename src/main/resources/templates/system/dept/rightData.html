@@ -267,19 +267,26 @@
 
         // 根据ID删除
         function deleteById(data) {
-            layer.confirm('是否要删除这行数据?', {icon: 3, title:'提示'}, function(index){
-                //do something
-                //发送请求
-                $.post("/dept/removeById",{id:data.id},function (res) {
-                    if (200===res.code){
-                        tableIns.reload();
-                    }else{
-                        layer.msg(res.msg);
-                    }
-                    layer.msg(res.msg);
-                })
-                layer.close(index);
-            });
+
+            $.post("/dept/checkDeptChildren",{id:data.id},function (result){
+                if (result.value){
+                    layer.msg("当前数据有子节点,请先删除子节点");
+                }else{
+                    layer.confirm('是否要删除这行数据?', {icon: 3, title:'提示'}, function(index){
+                        //do something
+                        //发送请求
+                        $.post("/dept/removeById",{id:data.id},function (res) {
+                            if (200===res.code){
+                                tableIns.reload();
+                            }else{
+                                layer.msg(res.msg);
+                            }
+                            layer.msg(res.msg);
+                        })
+                        layer.close(index);
+                    });
+                }
+            })
         }
         // 初始化树
         let selectTree= dtree.render({

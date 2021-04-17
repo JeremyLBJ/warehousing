@@ -149,4 +149,20 @@ public class DeptController {
         }
         return map;
     }
+
+
+    @RequestMapping(value = "/checkDeptChildren",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> checkDeptChildren (DeptVO vo) {
+        Map<String,Object> map = new HashMap<>();
+        QueryWrapper<SysDept> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("pid",vo.getId());
+        List<SysDept> list = this.iSysDeptService.list(queryWrapper);
+        if (list.size()>0) {
+            map.put("Value",true);
+        }else {
+            map.put("value",false);
+        }
+        return map;
+    }
 }
