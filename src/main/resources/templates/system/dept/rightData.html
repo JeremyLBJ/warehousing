@@ -128,6 +128,7 @@
 </div>
 <!-- 添加和修改的弹出层结束 -->
 
+
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 
 <script type="text/javascript">
@@ -222,6 +223,7 @@
                     $.get("/dept/loadDeptMaxOrderNum",function(res){
                         $("#ordernum").val(res.value);
                     })
+                    selectTree.setSelectValue("");
                 }
             });
         }
@@ -289,7 +291,7 @@
             })
         }
         // 初始化树
-        let selectTree= dtree.render({
+        let selectTree= dtree.renderSelect({
             elem: "#deptTree",
             width: "100%", // 可以在这里指定树的宽度来填满div
             dataStyle: "layuiStyle",  //使用layui风格的数据格式

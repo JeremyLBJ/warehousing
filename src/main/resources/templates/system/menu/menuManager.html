@@ -140,22 +140,28 @@
             ,cols: [
                 [ //表头
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field: 'id', title: 'ID',align:'center',width:'60'}
-                    ,{field: 'pid', title: '父级菜单ID',align:'center',width:'100'}
-                    ,{field: 'title', title: '菜单名称',align:'center',width:'100'}
-                    ,{field: 'icon', title: '菜单地址',align:'center',width:'100'}
-                    ,{field: 'open', title: '是否展开',align:'center',width:'100',templet:function(d){
+                    ,{field: 'id', title: 'ID',align:'center'}
+                    ,{field: 'pid', title: '父级菜单ID',align:'center'}
+                    ,{field: 'title', title: '菜单名称',align:'center'}
+                    ,{field: 'open', title: '是否展开',align:'center',templet:function(d){
                         return d.open==1?'<font color=blue>展开</font>':'<font color=red>不展开</font>';
                     }}
-                    ,{field: 'available', title: '是否可用',align:'center',width:'100',templet:function(d){
+                    ,{field: 'available', title: '是否可用',align:'center',templet:function(d){
                         return d.available==1?'<font color=blue>可用</font>':'<font color=red>不可用</font>';
                     }}
-                    ,{field: 'ordernum', title: '排序码',align:'center',width:'80'}
-                    ,{field: 'href', title: '菜单备注',align:'center',width:'130'}
-                    ,{field: 'target', title: '菜单创建时间',align:'center',width:'170'}
-                    ,{fixed: 'right', title: '操作',toolbar:'#menuRowBar',align:'center',width:'180'}
+                    ,{field: 'ordernum', title: '排序码',align:'center'}
+                    ,{fixed: 'right', title: '操作',toolbar:'#menuRowBar',align:'center'}
                 ]
-            ]
+            ],
+                done: function(res, curr, count){ //处理删除某一页最后一条数据的BUG
+                    if(res.data.length==0&&curr!=1){
+                        tableIns.reload({
+                            page:{
+                                curr:(curr-1)
+                            }
+                        });
+                    }
+                }
         });
 
         form.on("submit(doSearch)",function (data){
@@ -198,6 +204,7 @@
          * 添加
          */
         function openAddLayer () {
+            selectTree.setSelectValue("");
             mainIndex=layer.open({
                 type:1,
                 content:$("#addOrUpdateDiv"),
@@ -210,6 +217,7 @@
                     $.get("/menu/loadMenuMaxOrderNum",function(res){
                         $("#ordernum").val(res.value);
                     })
+                    selectTree.setSelectValue("");
                 }
             });
         }
@@ -277,7 +285,7 @@
             })
         }
         // 初始化树
-        let selectTree= dtree.render({
+        let selectTree= dtree.renderSelect({
             elem: "#menuTree",
             width: "100%", // 可以在这里指定树的宽度来填满div
             dataStyle: "layuiStyle",  //使用layui风格的数据格式

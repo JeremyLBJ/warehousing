@@ -127,6 +127,7 @@ public class MenuController {
     @ResponseBody
     public ResultObject saveMenu (PermissionVO vo) {
         try {
+            vo.setType(Constant.MENU);
             this.sysPermissionService.save(vo);
             return ResultObject.SAVE_SUCCESS;
         }catch (Exception e){

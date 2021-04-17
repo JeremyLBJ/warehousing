@@ -72,20 +72,20 @@
     </div>
 </div>
 
-<!-- 添加和修改的弹出层开始 -->
-<div style="display: none;padding: 5px" id="addOrUpdateDiv">
-    <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
+<!-- 添加和修改的弹出层开始  class="layui-form-pane"-->
+<div style="display: none;padding: 5px" id="addOrUpdateDiv" class="layui-form" >
+    <form action="" method="post" class="layui-form layui-form-pane"  id="dataFrm" lay-filter="dataFrm">
         <div class="layui-form-item">
             <label class="layui-form-label">公告标题</label>
             <div class="layui-input-block">
                 <input type="hidden" name="id">
-                <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input type="text" name="title"   lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">公告内容</label>
             <div class="layui-input-block">
-                <textarea class="layui-textarea" name="content" id="content"></textarea>
+                <textarea class="layui-textarea" lay-verify="required" name="content" id="content"></textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -117,12 +117,12 @@
 <script type="text/javascript">
 
     layui.use(['jquery','form','table','layer','laydate','layedit'],function(){
-        var $=layui.jquery;
-        var form=layui.form;
-        var table=layui.table;
-        var layer=layui.layer;
-        var laydate=layui.laydate;
-        var layedit=layui.layedit;
+        let $=layui.jquery;
+        let form=layui.form;
+        let table=layui.table;
+        let layer=layui.layer;
+        let laydate=layui.laydate;
+        let layedit=layui.layedit;
         //初始化时间选择器
         laydate.render({
             elem:'#startTime',
