@@ -29,9 +29,9 @@ public class SysPermission implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    @NotNull(message = "filde 不能为空")
     private Integer id;
 
+    @NotNull(message = "pid不能为空")
     private Integer pid;
 
     /**
@@ -39,6 +39,7 @@ public class SysPermission implements Serializable {
      */
     private String type;
 
+    @NotNull(message = "名称不能为空")
     private String title;
 
     /**

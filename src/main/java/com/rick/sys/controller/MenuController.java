@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -107,7 +108,8 @@ public class MenuController {
         Map<String, Object> map=new HashMap<String, Object>();
 
         QueryWrapper<SysPermission> queryWrapper=new QueryWrapper<>();
-        queryWrapper.orderByAsc("ordernum");
+        queryWrapper.eq("type",Constant.MENU);
+        queryWrapper.orderByDesc("ordernum");
         List<SysPermission> list = this.sysPermissionService.list(queryWrapper);
         if(list.size()>0) {
             map.put("value", list.get(0).getOrdernum()+1);
@@ -125,7 +127,7 @@ public class MenuController {
      */
     @RequestMapping(value = "/saveMenu",method = RequestMethod.POST)
     @ResponseBody
-    public ResultObject saveMenu (PermissionVO vo) {
+    public ResultObject saveMenu (@Valid PermissionVO vo) {
         try {
             vo.setType(Constant.MENU);
             this.sysPermissionService.save(vo);
@@ -158,7 +160,7 @@ public class MenuController {
      * @param vo
      * @return
      */
-    @RequestMapping(value = "/updateMenu",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateMenuById",method = RequestMethod.POST)
     @ResponseBody
     public ResultObject updateMenu (PermissionVO vo) {
         try {
