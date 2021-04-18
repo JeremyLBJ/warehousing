@@ -66,22 +66,16 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">菜单名称</label>
+            <label class="layui-form-label">权限名称</label>
             <div class="layui-input-block">
                 <input type="hidden" name="id">
-                <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入菜单名称" class="layui-input">
+                <input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入权限名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">菜单地址</label>
+            <label class="layui-form-label">权限code</label>
             <div class="layui-input-block">
-                <input type="text" name="href" lay-verify="required" autocomplete="off" placeholder="请输入菜单地址" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">菜单图标</label>
-            <div class="layui-input-block">
-                <input type="text" name="icon" lay-verify="required" autocomplete="off" placeholder="请输入菜单图标" class="layui-input">
+                <input type="text" name="percode" lay-verify="required" autocomplete="off" placeholder="请输入菜单地址" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -142,10 +136,8 @@
                     {type: 'checkbox', fixed: 'left'}
                     ,{field: 'id', title: 'ID',width:'80',align:'center'}
                     ,{field: 'pid', title: '父级菜单ID',width:'120',align:'center'}
-                    ,{field: 'title', title: '菜单名称',width:'200',align:'center'}
-                    ,{field: 'icon', title: '菜单图标',align:'center',width:'120',templet:function(d){
-                        return '<font class=layui-icon>'+d.icon+'</font>';
-                    }}
+                    ,{field: 'title', title: '权限名称',width:'200',align:'center'}
+                    ,{field: 'percode', title: 'code码',align:'center',width:'200'}
                     ,{field: 'open', title: '是否展开',align:'center',width:'120',templet:function(d){
                         return d.open==1?'<font color=blue>展开</font>':'<font color=red>不展开</font>';
                     }}
@@ -266,26 +258,19 @@
 
         // 根据ID删除
         function deleteById(data) {
-
-            $.post("/permission/checkPermissionChildren",{id:data.id},function (result){
-                if (result.value){
-                    layer.msg("当前数据有子节点,请先删除子节点");
-                }else{
-                    layer.confirm('是否要删除这行数据?', {icon: 3, title:'提示'}, function(index){
-                        //do something
-                        //发送请求
-                        $.post("/permission/removeById",{id:data.id},function (res) {
-                            if (200===res.code){
-                                tableIns.reload();
-                            }else{
-                                layer.msg(res.msg);
-                            }
-                            layer.msg(res.msg);
-                        })
-                        layer.close(index);
-                    });
-                }
-            })
+            layer.confirm('是否要删除这行数据?', {icon: 3, title:'提示'}, function(index){
+                //do something
+                //发送请求
+                $.post("/permission/removeById",{id:data.id},function (res) {
+                    if (200===res.code){
+                        tableIns.reload();
+                    }else{
+                        layer.msg(res.msg);
+                    }
+                    layer.msg(res.msg);
+                })
+                layer.close(index);
+            });
         }
         // 初始化树
         let selectTree= dtree.renderSelect({

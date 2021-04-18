@@ -63,4 +63,10 @@ public class SysController {
     public String toMenuManager () {
         return "system/menu/menuManager";
     }
+
+
+    @RequestMapping(value = "/toPermissionManager")
+    public String toPermissionManager () {
+        return "/system/permission/permission";
+    }
 }

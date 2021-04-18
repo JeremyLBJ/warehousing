@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class PermissionVO extends SysPermission {
 
-    private Integer page;
+    private Integer page = 1;
 
-    private Integer limit;
+    private Integer limit = 10;
 }

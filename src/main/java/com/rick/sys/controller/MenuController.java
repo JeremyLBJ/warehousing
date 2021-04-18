@@ -38,6 +38,7 @@ public class MenuController {
     @RequestMapping(value = "indexMenuJson",method = RequestMethod.GET)
     @ResponseBody
     public DataGridView indexMenuJson (PermissionVO vo) {
+        System.out.println("进入");
         QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", Constant.MENU);
         queryWrapper.eq("available",Constant.AVAILABLE);
@@ -197,7 +198,7 @@ public class MenuController {
     @RequestMapping(value = "/loadManagerLeftTreeJson",method = RequestMethod.POST)
     @ResponseBody
     public DataGridView loadManagerLeftTreeJson () {
-        QueryWrapper<SysPermission> queryWrapper=new QueryWrapper<>();
+        QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", Constant.MENU);
         queryWrapper.eq("available",Constant.AVAILABLE);
         List<SysPermission> list = this.sysPermissionService.list(queryWrapper);
