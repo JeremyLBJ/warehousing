@@ -102,7 +102,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block" style="text-align: center;">
-                <button type="button" class="layui-btn" lay-submit="" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit" ><span class="layui-icon layui-icon-add-1"></span>提交</button>
                 <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh-1"></span>重置</button>
             </div>
         </div>
@@ -239,22 +239,37 @@
 
         }
 
-        $("#doSubmit").click(function () {
-            let data = $("#dataFrm").serialize();
-            $.post(url,data,function (res){
+        form.on("submit(doSubmit)",function (data){
+            // let data = $("#dataFrm").serialize();
+            $.post(url,data.field,function (res){
                 if (200===res.code){
                     tableIns.reload();
                     //刷新下拉树
                     selectTree.reload();
                     $("#pid").val('');
-                    //刷新左边的菜单树
-                    // window.parent.left.permissionTree.reload();
                 }
                 layer.msg(res.msg);
                 layer.close(mainIndex);
             })
             return false;
-        });
+        })
+
+        // $("#doSubmit").click(function () {
+        //     let data = $("#dataFrm").serialize();
+        //     $.post(url,data,function (res){
+        //         if (200===res.code){
+        //             tableIns.reload();
+        //             //刷新下拉树
+        //             selectTree.reload();
+        //             $("#pid").val('');
+        //             //刷新左边的菜单树
+        //             // window.parent.left.permissionTree.reload();
+        //         }
+        //         layer.msg(res.msg);
+        //         layer.close(mainIndex);
+        //     })
+        //     return false;
+        // });
 
         // 根据ID删除
         function deleteById(data) {
