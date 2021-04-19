@@ -6,6 +6,8 @@ import com.rick.sys.service.ISysRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+
 /**
  * <p>
  *  服务实现类
@@ -17,4 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
+
+    @Override
+    public boolean removeById(Serializable id) {
+        //根据角色ID删除sys_role_permission
+        this.getBaseMapper().deleteRolePermissionByRid(id);
+        //根据角色ID删除sys_role_user
+        this.getBaseMapper().deleteRoleUserByRid(id);
+        return super.removeById(id);
+    }
 }

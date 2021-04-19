@@ -88,9 +88,9 @@ public class MenuController {
     public DataGridView loadAllMenu (PermissionVO vo) {
         IPage<SysPermission> page = new Page<>(vo.getPage(),vo.getLimit());
         QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(vo.getId() != null,"id",vo.getId()).or().eq(vo.getId()!= null,"pid",vo.getId());
         queryWrapper.eq("type", Constant.MENU);
         queryWrapper.like(StringUtils.isNoneBlank(vo.getTitle()),"title",vo.getTitle());
-        queryWrapper.eq(vo.getId() != null,"id",vo.getId()).or().eq(vo.getId()!= null,"pid",vo.getId());
         queryWrapper.orderByAsc("ordernum");
         this.sysPermissionService.page(page,queryWrapper);
         return new DataGridView(page.getTotal(),page.getRecords());

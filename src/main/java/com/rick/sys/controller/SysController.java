@@ -69,4 +69,10 @@ public class SysController {
     public String toPermissionManager () {
         return "/system/permission/permission";
     }
+
+
+    @RequestMapping(value = "/toRoleManager")
+    public String toRoleManager () {
+        return "system/role/roleManager";
+    }
 }
