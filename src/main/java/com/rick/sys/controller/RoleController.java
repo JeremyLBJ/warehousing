@@ -8,13 +8,17 @@ import com.rick.sys.VO.RoleVO;
 import com.rick.sys.common.Constant;
 import com.rick.sys.common.DataGridView;
 import com.rick.sys.common.ResultObject;
+import com.rick.sys.common.TreeNode;
+import com.rick.sys.entity.SysPermission;
 import com.rick.sys.entity.SysRole;
 import com.rick.sys.entity.SysRole;
 import com.rick.sys.entity.SysUser;
+import com.rick.sys.service.ISysPermissionService;
 import com.rick.sys.service.ISysRoleService;
 import com.rick.sys.untils.WebUntils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,6 +38,9 @@ public class RoleController {
 
     @Resource
     private ISysRoleService sysRoleService;
+
+    @Resource
+    private ISysPermissionService sysPermissionService;
 
 
     /**
@@ -84,7 +91,7 @@ public class RoleController {
 
 
     /**
-     * 保存系统公告
+     * 保存系统角色
      * @param vo
      * @return
      */
@@ -104,7 +111,7 @@ public class RoleController {
 
 
     /**
-     * 修改公告
+     * 修改角色
      * @param vo
      * @return
      */
@@ -119,5 +126,36 @@ public class RoleController {
             e.printStackTrace();
             return ResultObject.DELETE_ERROR;
         }
+    }
+
+
+    @RequestMapping(value = "/initPermissionByRoleId",method = RequestMethod.POST)
+    @ResponseBody
+    public DataGridView initPermissionByRoleId ( Integer roleId) {
+        // 查询所有可用的菜单和权限
+        QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("available",Constant.AVAILABLE);
+        List<SysPermission> list = this.sysPermissionService.list(queryWrapper);
+        //根据角色ID查询此角色拥有那些权限和菜单ID
+        List<Integer> idList = this.sysRoleService.queryIdsByRoleId(roleId);
+        List<SysPermission> sysPermissionsList = null;
+        if (idList.size() > 0) {
+            queryWrapper.in("id",idList);
+            sysPermissionsList = this.sysPermissionService.list(queryWrapper);
+        }else {
+            sysPermissionsList = new ArrayList<>();
+        }
+        List<TreeNode> treeNodes = new ArrayList<>();
+        //构建角色和菜单树
+        for (SysPermission p1: list) {
+            String checkArr = "0";
+            for (SysPermission p2: sysPermissionsList) {
+                if (p1.getId().equals(p2.getId())) {
+                    checkArr = "1";
+                }
+            }
+            treeNodes.add(new TreeNode(p1.getId(), p1.getPid(), p1.getTitle(), checkArr));
+        }
+        return new DataGridView(treeNodes);
     }
 }

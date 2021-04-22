@@ -11,4 +11,9 @@
 		delete from sys_role_user where rid=#{value}
 	</delete>
 
+
+	<select id="queryIdsByRoleId" resultType="java.lang.Integer">
+		select pid from sys_role_permission where rid = #{roleId}
+	</select>
+
 </mapper>

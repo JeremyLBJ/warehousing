@@ -27,6 +27,7 @@ public class TreeNode {
     private String href;
     private Boolean spread;
     private List<TreeNode> children=new ArrayList<>();
+    private String checkArr;
     /**
      *首页左边导航树的构造器
      */
@@ -51,4 +52,16 @@ public class TreeNode {
         this.title = title;
         this.spread = spread;
     }
+
+    /**
+     *首页左边部门树的构造器
+     */
+    public TreeNode(Integer id, Integer pid, String title,String checkArr) {
+        super();
+        this.id = id;
+        this.pid = pid;
+        this.title = title;
+        this.checkArr = checkArr;
+    }
+
 }

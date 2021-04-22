@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -27,5 +28,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         //根据角色ID删除sys_role_user
         this.getBaseMapper().deleteRoleUserByRid(id);
         return super.removeById(id);
+    }
+
+    @Override
+    public List<Integer> queryIdsByRoleId(Integer roleId) {
+        List<Integer> ids = this.getBaseMapper().queryIdsByRoleId(roleId);
+        return ids;
     }
 }
