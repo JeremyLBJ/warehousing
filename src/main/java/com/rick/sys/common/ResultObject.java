@@ -38,6 +38,10 @@ public class ResultObject {
     public static final ResultObject UPDATE_ERROR = new ResultObject(Constant.ERROR,"修改失败");
 
 
+    public static final ResultObject DISPATCH_SUCCESS = new ResultObject(Constant.OK,"分配成功");
+    public static final ResultObject DISPATCH_ERROR = new ResultObject(Constant.ERROR,"分配失败");
+
+
     private Integer code;
     private String msg;
 }

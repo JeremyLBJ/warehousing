@@ -14,6 +14,7 @@ import com.rick.sys.entity.SysRole;
 import com.rick.sys.entity.SysRole;
 import com.rick.sys.entity.SysUser;
 import com.rick.sys.service.ISysPermissionService;
+import com.rick.sys.service.ISysRolePermissionService;
 import com.rick.sys.service.ISysRoleService;
 import com.rick.sys.untils.WebUntils;
 import org.apache.commons.lang3.StringUtils;
@@ -41,6 +42,9 @@ public class RoleController {
 
     @Resource
     private ISysPermissionService sysPermissionService;
+
+    @Resource
+    private ISysRolePermissionService iSysRolePermissionService;
 
 
     /**
@@ -157,5 +161,18 @@ public class RoleController {
             treeNodes.add(new TreeNode(p1.getId(), p1.getPid(), p1.getTitle(), checkArr));
         }
         return new DataGridView(treeNodes);
+    }
+
+
+    @RequestMapping(value = "/saveRolePermission",method = RequestMethod.POST)
+    @ResponseBody
+    public ResultObject saveRolePermission (Integer rid , Integer [] ids) {
+        try {
+            this.iSysRolePermissionService.saveRolePermission(rid,ids);
+            return ResultObject.DISPATCH_SUCCESS;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResultObject.DISPATCH_ERROR;
+        }
     }
 }

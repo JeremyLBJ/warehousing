@@ -2,4 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rick.sys.mapper.SysRolePermissionMapper">
 
+    <insert id="saveRolePermission">
+        insert into sys_role_permission(rid,pid) values (#{rid},#{pid})
+    </insert>
+
+    <!-- 根据角色ID删除sys_role_permission -->
+    <delete id="deleteRolePermissionByRid">
+		delete from sys_role_permission where rid=#{value}
+	</delete>
+
 </mapper>
