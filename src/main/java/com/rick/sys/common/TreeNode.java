@@ -27,7 +27,7 @@ public class TreeNode {
     private String href;
     private Boolean spread;
     private List<TreeNode> children=new ArrayList<>();
-    private String checkArr;
+    private String checkArr = "0";
     /**
      *首页左边导航树的构造器
      */

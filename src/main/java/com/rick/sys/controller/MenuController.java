@@ -12,6 +12,7 @@ import com.rick.sys.service.ISysPermissionService;
 import com.rick.sys.untils.WebUntils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,7 +75,7 @@ public class MenuController {
         queryWrapper.eq("type", Constant.MENU);
         queryWrapper.eq("available",Constant.AVAILABLE);
         List<SysPermission> list = this.sysPermissionService.list(queryWrapper);
-        return null;
+        return new DataGridView(list);
     }
 
 
