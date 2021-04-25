@@ -35,4 +35,7 @@ public interface Constant {
      */
     Integer AVAILABLE = 1;
     Integer DISABLE = 0;
+
+
+    String USER_DEFAULT_PWD = "123456";
 }
