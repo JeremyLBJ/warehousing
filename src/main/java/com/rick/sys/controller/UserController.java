@@ -48,6 +48,11 @@ public class UserController {
     private ISysRoleService sysRoleService;
 
 
+    /**
+     * 用户表查询
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/loadAllUser",method = RequestMethod.GET)
     public DataGridView loadAllUser(UserVO vo) {
         IPage<SysUser> page = new Page<>(vo.getPage(),vo.getLimit());
@@ -76,6 +81,11 @@ public class UserController {
     }
 
 
+    /**
+     * 保存用户对象
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public ResultObject save (UserVO vo) {
         try {
@@ -95,6 +105,11 @@ public class UserController {
     }
 
 
+    /**
+     * 根据ID移除对象
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/removeById",method = RequestMethod.POST)
     public ResultObject removeById (UserVO vo) {
         try {
@@ -128,6 +143,11 @@ public class UserController {
     }
 
 
+    /**
+     * 根据用户信息
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     public ResultObject updateUser (UserVO vo) {
         try {
@@ -141,6 +161,11 @@ public class UserController {
     }
 
 
+    /**
+     * 根据ID查询用户信息
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/loadUserById",method = RequestMethod.GET)
     public DataGridView loadUserById (UserVO vo) {
         QueryWrapper<SysUser> queryWrapper=new QueryWrapper<>();
@@ -150,7 +175,11 @@ public class UserController {
     }
 
 
-
+    /**
+     * 通过部门ID加载用户信息
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/loadUsersByDeptId",method = RequestMethod.GET)
     public DataGridView loadUsersByDeptId (UserVO vo) {
         QueryWrapper<SysUser> queryWrapper=new QueryWrapper<>();
@@ -160,6 +189,11 @@ public class UserController {
     }
 
 
+    /**
+     * 把用户名字改为拼音
+     * @param username
+     * @return
+     */
     @RequestMapping(value = "/changeChineseToPinyin",method = RequestMethod.GET)
     public Map<String,Object> changeChineseToPinyin(String username){
         Map<String,Object> map=new HashMap<>();
@@ -172,6 +206,11 @@ public class UserController {
     }
 
 
+    /**
+     * 初始化角色表
+     * @param vo
+     * @return
+     */
     @RequestMapping(value = "/initRoleByUserId",method = RequestMethod.GET)
     public DataGridView initRoleByUserId (RoleVO vo) {
         QueryWrapper<SysRole> wrapper = new QueryWrapper<>();
