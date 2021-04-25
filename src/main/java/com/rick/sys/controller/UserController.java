@@ -6,16 +6,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rick.sys.VO.UserVO;
 import com.rick.sys.common.Constant;
 import com.rick.sys.common.DataGridView;
+import com.rick.sys.common.ResultObject;
 import com.rick.sys.entity.SysDept;
 import com.rick.sys.entity.SysUser;
 import com.rick.sys.service.ISysDeptService;
 import com.rick.sys.service.ISysUserService;
+import org.apache.catalina.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -58,5 +61,30 @@ public class UserController {
             }
         }
         return new DataGridView(page.getTotal(),records);
+    }
+
+
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public ResultObject save (UserVO vo) {
+        try {
+            vo.setHiredate(LocalDateTime.now());
+            this.iSysUserService.save(vo);
+            return ResultObject.SAVE_SUCCESS;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResultObject.SAVE_ERROR;
+        }
+    }
+
+
+    @RequestMapping(value = "/removeById",method = RequestMethod.POST)
+    public ResultObject removeById (UserVO vo) {
+        try {
+            this.iSysUserService.removeById(vo.getId());
+            return ResultObject.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultObject.DELETE_ERROR;
+        }
     }
 }
