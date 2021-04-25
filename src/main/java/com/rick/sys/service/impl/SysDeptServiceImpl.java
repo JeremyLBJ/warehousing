@@ -39,4 +39,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public boolean removeById(Serializable id) {
         return super.removeById(id);
     }
+
+    @Override
+    public boolean save(SysDept entity) {
+        return super.save(entity);
+    }
 }

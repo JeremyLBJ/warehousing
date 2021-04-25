@@ -1,5 +1,6 @@
 package com.rick.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -61,6 +62,18 @@ public class SysUser implements Serializable {
     private String imgpath;
 
     private String salt;
+
+    /**
+     * 领导名称
+     */
+    @TableField(exist = false)
+    private String leaderName;
+
+    /**
+     *部门名称
+     */
+    @TableField(exist = false)
+    private String deptName;
 
 
 }
