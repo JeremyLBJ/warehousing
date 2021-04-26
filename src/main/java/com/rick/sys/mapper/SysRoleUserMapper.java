@@ -3,6 +3,8 @@ package com.rick.sys.mapper;
 import com.rick.sys.entity.SysRoleUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysRoleUserMapper extends BaseMapper<SysRoleUser> {
 
+    List<Integer> queryRidByUid(Integer id);
 }

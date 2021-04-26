@@ -6,6 +6,8 @@ import com.rick.sys.service.ISysRoleUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -17,4 +19,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysRoleUserServiceImpl extends ServiceImpl<SysRoleUserMapper, SysRoleUser> implements ISysRoleUserService {
 
+    @Override
+    public List<Integer> queryRidByUid(Integer id) {
+        List<Integer> integers = this.getBaseMapper().queryRidByUid(id);
+        return integers;
+    }
 }

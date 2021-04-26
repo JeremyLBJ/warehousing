@@ -7,8 +7,12 @@ import com.rick.sys.VO.MenuVO;
 import com.rick.sys.VO.PermissionVO;
 import com.rick.sys.common.*;
 import com.rick.sys.entity.SysPermission;
+import com.rick.sys.entity.SysRolePermission;
+import com.rick.sys.entity.SysRoleUser;
 import com.rick.sys.entity.SysUser;
 import com.rick.sys.service.ISysPermissionService;
+import com.rick.sys.service.ISysRolePermissionService;
+import com.rick.sys.service.ISysRoleUserService;
 import com.rick.sys.untils.WebUntils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -36,6 +40,13 @@ public class MenuController {
     private ISysPermissionService sysPermissionService;
 
 
+    @Resource
+    private ISysRoleUserService roleUserService;
+
+    @Resource
+    private ISysRolePermissionService permissionService;
+
+
     @RequestMapping(value = "indexMenuJson",method = RequestMethod.GET)
     @ResponseBody
     public DataGridView indexMenuJson (PermissionVO vo) {
@@ -50,6 +61,14 @@ public class MenuController {
             list = this.sysPermissionService.list(queryWrapper);
         }else {
             // 普通管理者
+            //根据用户ID查询对应的角色ID
+            List<Integer> integers = this.roleUserService.queryRidByUid(user.getId());
+            if (integers.size() > 0){
+                QueryWrapper<SysRolePermission> queryWrapper1 = new QueryWrapper<>();
+                this.permissionService.list();
+            }
+            //根据角色ID查询对应角色所拥有的的菜单和权限
+
             list = this.sysPermissionService.list(queryWrapper);
         }
         List<TreeNode> trees = new ArrayList<>();
