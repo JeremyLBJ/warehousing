@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 菜单前端控制器
@@ -50,7 +47,6 @@ public class MenuController {
     @RequestMapping(value = "indexMenuJson",method = RequestMethod.GET)
     @ResponseBody
     public DataGridView indexMenuJson (PermissionVO vo) {
-        System.out.println("进入");
         QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", Constant.MENU);
         queryWrapper.eq("available",Constant.AVAILABLE);
@@ -64,12 +60,22 @@ public class MenuController {
             //根据用户ID查询对应的角色ID
             List<Integer> integers = this.roleUserService.queryRidByUid(user.getId());
             if (integers.size() > 0){
-                QueryWrapper<SysRolePermission> queryWrapper1 = new QueryWrapper<>();
-                this.permissionService.list();
-            }
-            //根据角色ID查询对应角色所拥有的的菜单和权限
+                //根据角色ID取到权限和菜单ID
+                Set<Integer> pids=new HashSet<>();
+                for (Integer rid : integers) {
+                    //根据角色ID查询对应角色所拥有的的菜单和权限
+                    List<Integer> permissionIds = permissionService.queryRolePermissionIdsByRid(rid);
+                    pids.addAll(permissionIds);
+                }
 
-            list = this.sysPermissionService.list(queryWrapper);
+                //根据角色ID查询权限
+                if(pids.size()>0) {
+                    queryWrapper.in("id", pids);
+                    list = sysPermissionService.list(queryWrapper);
+                }else {
+                    list =new ArrayList<>();
+                }
+            }
         }
         List<TreeNode> trees = new ArrayList<>();
         for (SysPermission s: list) {

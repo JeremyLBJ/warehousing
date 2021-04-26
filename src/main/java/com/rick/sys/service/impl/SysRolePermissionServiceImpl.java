@@ -8,6 +8,7 @@ import com.rick.sys.service.ISysRoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -31,5 +32,19 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
                 baseMapper.saveRolePermission(rid,id);
             }
         }
+    }
+
+    @Override
+    public List<Integer> queryPidByRids(List<Integer> integers) {
+        SysRolePermissionMapper baseMapper = this.getBaseMapper();
+        baseMapper.queryPidByRids(integers);
+        return null;
+    }
+
+    @Override
+    public List<Integer> queryRolePermissionIdsByRid(Integer rid) {
+        SysRolePermissionMapper baseMapper = this.getBaseMapper();
+        List<Integer> permissionIds = baseMapper.queryRolePermissionIdsByRid(rid);
+        return permissionIds;
     }
 }

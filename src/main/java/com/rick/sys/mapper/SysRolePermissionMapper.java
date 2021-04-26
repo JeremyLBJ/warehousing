@@ -4,6 +4,8 @@ import com.rick.sys.entity.SysRolePermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -18,4 +20,10 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
 
 
     void deleteRolePermissionByRid(Integer rid);
+
+    List<Integer> queryPidByRids( List<Integer> integers);
+
+    List<Integer> queryPidByRid(@Param("rid") Integer rid);
+
+    List<Integer> queryRolePermissionIdsByRid(Integer rid);
 }

@@ -222,6 +222,12 @@ public class UserController {
 
     @RequestMapping(value = "/saveUserRole",method = RequestMethod.POST)
     public ResultObject saveUserRole (Integer uid,Integer [] ids) {
-        return null;
+        try {
+            this.iSysUserService.saveUserRole(uid,ids);
+            return ResultObject.DISPATCH_SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultObject.DISPATCH_ERROR;
+        }
     }
 }

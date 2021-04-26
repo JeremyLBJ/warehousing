@@ -11,4 +11,24 @@
 		delete from sys_role_permission where rid=#{value}
 	</delete>
 
+    <select id="queryPidByRid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT  DISTINCT pid FROM `sys_role_permission` WHERE rid = #{rid}
+<!--        <foreach collection="integers" item ="rid" index="i" open="(" close=")" separator=",">-->
+<!--            #{rid}-->
+<!--        </foreach>-->
+    </select>
+
+    <select id="queryPidByRids" resultType="java.lang.Integer" parameterType="java.util.List">
+        SELECT  DISTINCT pid FROM `sys_role_permission` WHERE rid IN
+                <foreach collection="list" item ="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+    </select>
+
+    <!-- 根据角色ID查询当前角色拥有的所有的权限或菜单ID -->
+    <select id="queryRolePermissionIdsByRid" resultType="java.lang.Integer">
+		select pid from sys_role_permission where rid=#{value}
+	</select>
+
+
 </mapper>

@@ -7,8 +7,10 @@ import com.rick.sys.common.Constant;
 import com.rick.sys.common.TreeNode;
 import com.rick.sys.entity.SysPermission;
 import com.rick.sys.entity.SysUser;
+import com.rick.sys.mapper.SysRolePermissionMapper;
 import com.rick.sys.mapper.SysUserMapper;
 import com.rick.sys.service.ISysPermissionService;
+import com.rick.sys.service.ISysRolePermissionService;
 import com.rick.sys.untils.WebUntils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +28,10 @@ class WarehousingApplicationTests {
     private SysUserMapper sysUserMapper;
 
     @Resource
-    private ISysPermissionService sysPermissionService;
+    private ISysRolePermissionService iSysRolePermissionService;
+
+    @Resource
+    private SysRolePermissionMapper sysRolePermissionMapper;
 
     @Test
     void contextLoads() {
@@ -50,6 +55,14 @@ class WarehousingApplicationTests {
     }
 
 
+    @Test
+    void rolePermissionTest () {
+//        List<Integer> integers = this.sysRolePermissionMapper.queryPidByRid(5);
+//        for (Integer in: integers
+//             ) {
+//            System.out.println(in);
+//        }
+    }
     // 需要传一个vo
     @Test
     void buildTreeTest () {

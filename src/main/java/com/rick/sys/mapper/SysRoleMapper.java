@@ -21,4 +21,8 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     void deleteRoleUserByRid(Serializable id);
 
     List<Integer> queryIdsByRoleId(Integer roleId);
+
+    void deleteRoleUserByUid(Integer uid);
+
+    void insertUserRole(Integer uid, Integer rid);
 }
