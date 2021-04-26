@@ -218,4 +218,10 @@ public class UserController {
         List<SysRole> list = this.sysRoleService.list(wrapper);
         return new DataGridView(list);
     }
+
+
+    @RequestMapping(value = "/saveUserRole",method = RequestMethod.POST)
+    public ResultObject saveUserRole (Integer uid,Integer [] ids) {
+        return null;
+    }
 }

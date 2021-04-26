@@ -12,12 +12,14 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.context.annotation.Lazy;
 
 import javax.annotation.Resource;
 
 public class UserRealm extends AuthorizingRealm {
 
     @Resource
+    @Lazy
     private ISysUserService userService;
 
 
