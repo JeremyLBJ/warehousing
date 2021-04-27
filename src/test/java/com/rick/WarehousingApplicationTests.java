@@ -11,9 +11,11 @@ import com.rick.sys.mapper.SysRolePermissionMapper;
 import com.rick.sys.mapper.SysUserMapper;
 import com.rick.sys.service.ISysPermissionService;
 import com.rick.sys.service.ISysRolePermissionService;
+import com.rick.sys.service.ISysRoleUserService;
 import com.rick.sys.untils.WebUntils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Lazy;
 
 import javax.annotation.Resource;
 import java.security.Permission;
@@ -32,6 +34,17 @@ class WarehousingApplicationTests {
 
     @Resource
     private SysRolePermissionMapper sysRolePermissionMapper;
+
+    @Resource
+    private ISysPermissionService sysPermissionService;
+
+
+    @Resource
+    private ISysRoleUserService roleUserService;
+
+    @Resource
+    private ISysRolePermissionService permissionService;
+
 
     @Test
     void contextLoads() {
@@ -104,6 +117,44 @@ class WarehousingApplicationTests {
         System.out.println(LocalDateTime.now());
         System.out.println(new Date());
         System.out.println(formatDateTime);
+    }
+
+
+    @Test
+    void permissionTest () {
+        QueryWrapper<SysPermission> qw = new QueryWrapper<>();
+        qw.eq("type", Constant.PERMISSION);
+        qw.eq("available",Constant.AVAILABLE);
+        List<SysPermission> list = null;
+        if (Constant.SUPER_USER.equals(1)) {
+            // 超级管理员
+            list = this.sysPermissionService.list(qw);
+        }else {
+            // 普通管理者
+            //根据用户ID查询对应的角色ID
+            List<Integer> integers = this.roleUserService.queryRidByUid(6);
+            if (integers.size() > 0){
+                //根据角色ID取到权限和菜单ID
+                Set<Integer> pids=new HashSet<>();
+                for (Integer rid : integers) {
+                    //根据角色ID查询对应角色所拥有的的菜单和权限
+                    List<Integer> permissionIds = permissionService.queryRolePermissionIdsByRid(rid);
+                    pids.addAll(permissionIds);
+                }
+                //根据角色ID查询权限
+                if(pids.size()>0) {
+                    qw.in("id", pids);
+                    list = sysPermissionService.list(qw);
+                }else {
+                    list =new ArrayList<>();
+                }
+            }
+        }
+        List<String> percode = new ArrayList<>();
+        for (SysPermission sysPermission: list) {
+            percode.add(sysPermission.getPercode());
+        }
+        System.out.println(Arrays.asList(percode));
     }
 
 }
