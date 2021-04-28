@@ -16,4 +16,9 @@ public class BusinessController {
     public String toCustomerManager () {
         return "business/customer/customerManager";
     }
+
+    @RequestMapping(value = "/toProviderManager")
+    public String toProviderManager () {
+        return "business/provider/providerManager";
+    }
 }
