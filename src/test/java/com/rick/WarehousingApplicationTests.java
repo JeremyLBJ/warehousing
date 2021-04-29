@@ -157,4 +157,23 @@ class WarehousingApplicationTests {
         System.out.println(Arrays.asList(percode));
     }
 
+
+    @Test
+    void round() {
+        Set set = new HashSet();
+        Set rounds = rounds(set);
+        System.out.println(rounds);
+    }
+
+
+    public Set rounds (Set set) {
+        if (set.size() == 4)
+            return set;
+        Random random = new Random();
+        int i = random.nextInt(10);
+        set.add(i);
+        System.out.println(i);
+        return rounds(set);
+    }
+
 }
