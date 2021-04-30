@@ -67,7 +67,13 @@ public class GoodsController {
 
     @RequestMapping(value = "/updateGoods",method = RequestMethod.POST)
     public ResultObject updateGoods (GoodsVO vo) {
-        return null;
+        try {
+            this.goodsService.updateById(vo);
+            return ResultObject.UPDATE_SUCCESS;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResultObject.UPDATE_ERROR;
+        }
     }
 
 }
