@@ -22,6 +22,7 @@ import java.security.Permission;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 class WarehousingApplicationTests {
@@ -163,6 +164,13 @@ class WarehousingApplicationTests {
         Set set = new HashSet();
         Set rounds = rounds(set);
         System.out.println(rounds);
+    }
+
+
+    @Test
+    void streamTest () {
+        Random random = new Random();
+        random.ints().limit(10).sorted().forEach(System.out::println);
     }
 
 
