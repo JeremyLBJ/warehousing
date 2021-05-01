@@ -25,7 +25,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/provider")
-public class PerviderController {
+public class ProviderController {
     
     @Resource
     private IBusProviderService busProviderService ;
