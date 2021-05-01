@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rick.sys.VO.PerviderVO;
+import com.rick.sys.common.Constant;
 import com.rick.sys.common.DataGridView;
 import com.rick.sys.common.ResultObject;
 import com.rick.sys.entity.BusProvider;
@@ -90,6 +91,14 @@ public class ProviderController {
             e.printStackTrace();
             return ResultObject.DELETE_ERROR;
         }
+    }
+
+    @RequestMapping(value = "/loadAllProviderForSelect",method = RequestMethod.GET)
+    public DataGridView loadAllProviderForSelect () {
+        QueryWrapper<BusProvider> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("available", Constant.AVAILABLE);
+        List<BusProvider> list = this.busProviderService.list(queryWrapper);
+        return new DataGridView(list);
     }
 
 }

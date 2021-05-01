@@ -1,5 +1,6 @@
 package com.rick.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -52,6 +53,9 @@ public class BusGoods implements Serializable {
     private Integer available;
 
     private Integer providerid;
+
+    @TableField(exist = false)
+    private String providername;
 
 
 }

@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.rick.sys.common.BuilderTreeNode;
 import com.rick.sys.common.Constant;
 import com.rick.sys.common.TreeNode;
+import com.rick.sys.entity.BusProvider;
 import com.rick.sys.entity.SysPermission;
 import com.rick.sys.entity.SysUser;
 import com.rick.sys.mapper.SysRolePermissionMapper;
 import com.rick.sys.mapper.SysUserMapper;
+import com.rick.sys.service.IBusProviderService;
 import com.rick.sys.service.ISysPermissionService;
 import com.rick.sys.service.ISysRolePermissionService;
 import com.rick.sys.service.ISysRoleUserService;
@@ -45,6 +47,9 @@ class WarehousingApplicationTests {
 
     @Resource
     private ISysRolePermissionService permissionService;
+
+    @Resource
+    private IBusProviderService providerService;
 
 
     @Test
@@ -182,6 +187,24 @@ class WarehousingApplicationTests {
         set.add(i);
         System.out.println(i);
         return rounds(set);
+    }
+
+
+    @Test
+    void listIdTest () {
+        QueryWrapper<BusProvider> queryWrapper = new QueryWrapper<>();
+        List<Integer> id = new ArrayList<>();
+        id.add(1);
+        id.add(3);
+        id.add(3);
+        id.add(3);
+        queryWrapper.in("id",id);
+        List<BusProvider> list = this.providerService.list(queryWrapper);
+        for (BusProvider b: list
+             ) {
+            System.out.println(b);
+        }
+
     }
 
 }

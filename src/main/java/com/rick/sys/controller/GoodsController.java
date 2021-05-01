@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 import java.util.List;
 
 @RequestMapping(value = "/goods")
@@ -74,6 +75,36 @@ public class GoodsController {
             e.printStackTrace();
             return ResultObject.UPDATE_ERROR;
         }
+    }
+
+
+    @RequestMapping(value = "/loadAllGoodsForSelect",method = RequestMethod.GET)
+    public DataGridView loadAllGoodsForSelect () {
+        QueryWrapper<BusGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("available", Constant.AVAILABLE);
+        List<BusGoods> list = this.goodsService.list(queryWrapper);
+        for (BusGoods goods:list) {
+            BusProvider byId = this.busProviderService.getById(goods.getProviderid());
+            if (null != byId) {
+                goods.setProvidername(byId.getProvidername());
+            }
+        }
+        return new DataGridView(list);
+    }
+
+    @RequestMapping(value = "/loadGoodsByProviderId",method = RequestMethod.GET)
+    public DataGridView loadGoodsByProviderId (Integer providerid) {
+        QueryWrapper<BusGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("available", Constant.AVAILABLE);
+        queryWrapper.eq(null != providerid && 0 != providerid,"providerid",providerid);
+        List<BusGoods> list = this.goodsService.list(queryWrapper);
+        for (BusGoods goods:list) {
+            BusProvider byId = this.busProviderService.getById(goods.getProviderid());
+            if (null != byId) {
+                goods.setProvidername(byId.getProvidername());
+            }
+        }
+        return new DataGridView(list);
     }
 
 }
