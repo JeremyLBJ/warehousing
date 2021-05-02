@@ -107,4 +107,16 @@ public class GoodsController {
         return new DataGridView(list);
     }
 
+
+    @RequestMapping(value = "/deleteGoods",method = RequestMethod.POST)
+    public ResultObject deleteGoods (Integer id) {
+        try {
+            this.goodsService.removeById(id);
+            return ResultObject.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultObject.DELETE_ERROR;
+        }
+    }
+
 }

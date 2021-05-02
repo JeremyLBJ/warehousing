@@ -31,4 +31,10 @@ public class BusinessController {
     public String toInportManager () {
         return "/business/inport/inportManaget";
     }
+
+
+    @RequestMapping(value = "/toOutportManager")
+    public String toOutportManager () {
+        return "/business/outport/outportManager";
+    }
 }
