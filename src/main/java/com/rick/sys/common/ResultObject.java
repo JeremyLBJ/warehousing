@@ -42,6 +42,13 @@ public class ResultObject {
     public static final ResultObject DISPATCH_ERROR = new ResultObject(Constant.ERROR,"分配失败");
 
 
+    /**
+     * 退货
+     */
+    public static final ResultObject RETURNGOODS_SUCCESS = new ResultObject(Constant.OK,"退货成功");
+    public static final ResultObject RETURNGOODS_ERROR = new ResultObject(Constant.ERROR,"退货失败");
+
+
     private Integer code;
     private String msg;
 }

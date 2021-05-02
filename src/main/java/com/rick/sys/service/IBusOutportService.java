@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBusOutportService extends IService<BusOutport> {
 
+    void addOutport(Integer id, Integer number, String remark);
 }
