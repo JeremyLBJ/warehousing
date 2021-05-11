@@ -12,6 +12,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 
@@ -31,6 +34,7 @@ public class SysUser implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @NotNull(message = "name不能为空")
     private String name;
 
     private String loginname;
@@ -79,6 +83,8 @@ public class SysUser implements Serializable {
     private String deptName;
 
     @TableField(exist = false)
+    @Min(value = 18, message = "未满18岁")
+    @NotNull(message = "age不能为空")
     private Integer age;
 
 

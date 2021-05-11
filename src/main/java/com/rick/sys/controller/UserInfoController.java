@@ -20,17 +20,15 @@ public class UserInfoController {
 
     /***
      * ConstraintViolationException异常统一处理测试
-     * @param name
-     * @param age
+     * @param
+     * @param
      * @return
      */
     @GetMapping("/getUser")
-    public ResultVO<SysUser> getUser(@NotNull(message = "name不能为空") String name,
-                                     @Min(value = 18, message = "未满18岁")
-                                      @NotNull(message = "age不能为空") Integer age) {
+    public ResultVO<SysUser> getUser(@Validated SysUser sysUser) {
         SysUser userInfo = new SysUser();
-        userInfo.setAge(age);
-        userInfo.setName(name);
+        userInfo.setAge(sysUser.getAge());
+        userInfo.setName(sysUser.getName());
         return ResultVOUtil.success(userInfo);
     }
 
